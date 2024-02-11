@@ -1,0 +1,9 @@
+<ul>
+  @for (todo of todoStore.todoEntities(); track todo._id) {
+  <li (click)="selectItem(todo._id)">{{ todo.name }}</li>
+  } @empty {
+  <p>no items</p>
+  } @if(todoStore.selectedTodo()) {
+  <pre>{{ todoStore.selectedTodo() | json }}</pre>
+  }
+</ul>
