@@ -1,1 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p>
+    <app-input controlKey="title" [control]="form.controls.title" />
+  </p>
+
+  <p>
+    <label for="price">Price </label>
+    <input type="text" id="price" name="price" formControlName="price" />
+  </p>
+
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+</form>
+
+<br />
+<br />
+
 <pre>{{ productStore.products() | json }}</pre>
