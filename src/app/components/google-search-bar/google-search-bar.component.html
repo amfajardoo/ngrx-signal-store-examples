@@ -1,0 +1,25 @@
+<div
+  class="search-bar-container"
+  cdkOverlayOrigin
+  #overlayPosition="cdkOverlayOrigin"
+  [ngClass]="{ 'opened mat-elevation-z2': isOverlayOpen() }"
+>
+  <button mat-icon-button>
+    <mat-icon>search</mat-icon>
+  </button>
+  <input
+    #searchInput
+    placeholder="Search"
+    (click)="isOverlayOpen.set(true)"
+    (keydown.ENTER)="search(searchInput.value)"
+  />
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="overlayPosition"
+  [cdkConnectedOverlayOpen]="isOverlayOpen()"
+  (overlayOutsideClick)="isOverlayOpen.set(false)"
+>
+  <app-search-overlay />
+</ng-template>
