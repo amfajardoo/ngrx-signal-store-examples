@@ -1,0 +1,221 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "./**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:boundaries/strict"
+      ],
+      "rules": {
+        "boundaries/element-types": [
+          "error",
+          {
+            "default": "disallow",
+            "message": "${file.type} is not allowed to import ${dependency.type}",
+            "rules": [
+              {
+                "from": "main",
+                "allow": [
+                  ["app"]
+                ]
+              },
+              {
+                "from": "main-server",
+                "allow": [
+                  ["app"]
+                ]
+              },
+              {
+                "from": "core",
+                "allow": [
+                  ["env"],
+                  ["core"]
+                ]
+              },
+              {
+                "from": "ui",
+                "allow": [
+                  ["env"],
+                  ["ui"]
+                ]
+              },
+              {
+                "from": "layout",
+                "allow": [
+                  ["env"],
+                  ["core"],
+                  ["ui"],
+                  ["pattern"]
+                ]
+              },
+              {
+                "from": "app",
+                "allow": [
+                  ["env"],
+                  ["app"],
+                  ["core"],
+                  ["layout"],
+                  ["feature-routes"]
+                ]
+              },
+              {
+                "from": ["pattern"],
+                "allow": [
+                  ["env"],
+                  ["core"],
+                  ["ui"],
+                  ["pattern"]
+                ]
+              },
+              {
+                "from": ["feature"],
+                "allow": [
+                  ["env"],
+                  ["core"],
+                  ["ui"],
+                  ["pattern"]
+                ]
+              },
+              {
+                "from": ["feature-routes"],
+                "allow": [
+                  ["env"],
+                  ["core"],
+                  ["pattern"],
+                  ["feature"],
+                  ["feature-routes"]
+                ]
+              }
+            ]
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ]
+      },
+      "settings": {
+        "import/resolver": {
+          "typescript": {
+            "alwaysTryTypes": true
+          }
+        },
+        "boundaries/ignore": [
+          "**/jest(.|-)*.ts" 
+        ],
+        "boundaries/dependency-nodes": ["import", "dynamic-import"],
+        "boundaries/elements": [
+          {
+            "type": "env",
+            "pattern": "environments",
+            "basePattern": "./**/src",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "main",
+            "mode": "file",
+            "pattern": "main.ts",
+            "basePattern": "./**/src",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "main-server",
+            "mode": "file",
+            "pattern": "main.server.ts",
+            "basePattern": "./**/src",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "app",
+            "mode": "file",
+            "pattern": "app(-|.)*.ts",
+            "basePattern": "./**/src/app",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "core",
+            "pattern": "core",
+            "basePattern": "./**/src/app",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "ui",
+            "pattern": "ui",
+            "basePattern": "./**/src/app",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "layout",
+            "pattern": "layout",
+            "basePattern": "./**/src/app",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "pattern",
+            "pattern": "pattern",
+            "basePattern": "./**/src/app",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "feature-routes",
+            "mode": "file",
+            "pattern": "feature/*/*.routes.ts",
+            "capture": ["feature"],
+            "basePattern": "./**/src/app",
+            "baseCapture": ["app"]
+          },
+          {
+            "type": "feature",
+            "pattern": "feature/*",
+            "capture": ["feature"],
+            "basePattern": "./**/src/app",
+            "baseCapture": ["app"]
+          },
+
+          {
+            "type": "lib-api",
+            "mode": "file",
+            "pattern": "./**/src/public-api.ts",
+            "capture": ["lib"]
+          },
+          {
+            "type": "lib",
+            "pattern": "./**/src/lib",
+            "capture": ["lib"]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:@angular-eslint/template/accessibility"
+      ],
+      "rules": {}
+    }
+  ]
+}
