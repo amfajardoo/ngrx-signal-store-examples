@@ -1,30 +1,60 @@
+import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  NonNullableFormBuilder,
+} from '@angular/forms';
 import { InputComponent } from './input.component';
-import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
-import { inject } from '@angular/core';
+
+@Component({
+  template: `
+    <form [formGroup]="form">
+      <app-input controlKey="title" [control]="form.controls.title" />
+    </form>
+  `,
+})
+class TestHostComponent {
+  fb = inject(NonNullableFormBuilder);
+
+  form = this.fb.group({
+    title: this.fb.control(''),
+  });
+}
 
 describe('InputComponent', () => {
-  let component: InputComponent;
-  let fixture: ComponentFixture<InputComponent>;
+  let hostComponent: TestHostComponent;
+  let hostFixture: ComponentFixture<TestHostComponent>;
+  let formGroup: FormGroup;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InputComponent, ReactiveFormsModule],
-      providers: [
-        {
-          provide: ControlContainer,
-          useFactory: () => inject(ControlContainer, { skipSelf: true }),
-        },
-      ],
+      declarations: [TestHostComponent],
+      imports: [ReactiveFormsModule, InputComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InputComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    hostFixture = TestBed.createComponent(TestHostComponent);
+    hostComponent = hostFixture.componentInstance;
+    formGroup = hostComponent.form;
+    hostFixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(hostComponent).toBeTruthy();
+    // Access the InputComponent instance from the TestHostComponent
+    const inputComponent = hostFixture.debugElement.query(
+      (c) => c.name === 'app-input',
+    ).componentInstance;
+    expect(inputComponent).toBeTruthy();
+  });
+
+  it('should add control to parent form group on init', () => {
+    expect(formGroup.contains('title')).toBeTrue();
+    expect(formGroup.get('title')!.value).toEqual(''); // Optionally check the initial value
+  });
+
+  it('should remove control from parent form group on destroy', () => {
+    hostFixture.destroy();
+    expect(formGroup.contains('title')).toBeFalse();
   });
 });
