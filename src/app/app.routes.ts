@@ -14,4 +14,8 @@ export const routes: Routes = [
     path: 'todo',
     loadChildren: () => import('./feature/todos/todos.routes'),
   },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];

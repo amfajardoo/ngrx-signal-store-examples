@@ -8,6 +8,8 @@ import {
 } from '@angular/router';
 import { ENVIRONMENT_INITIALIZER } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideClientHydration } from '@angular/platform-browser';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 export interface CoreOptions {
   routes: Routes;
@@ -15,6 +17,8 @@ export interface CoreOptions {
 
 export function provideCore({ routes }: CoreOptions) {
   return [
+    provideClientHydration(),
+    provideHttpClient(withFetch()),
     provideAnimationsAsync(),
     provideRouter(
       routes,
