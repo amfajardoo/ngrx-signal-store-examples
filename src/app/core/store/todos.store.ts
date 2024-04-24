@@ -9,7 +9,7 @@ import {
   withComputed,
 } from '@ngrx/signals';
 import { withEntities, setAllEntities } from '@ngrx/signals/entities';
-import { withLogger } from './features/logger.feature';
+// import { withLogger } from './features/logger.feature';
 
 export interface Todo {
   // By default id is the main key for getting any element
@@ -29,7 +29,7 @@ const initialState: TodoState = {
 export const TodoStore = signalStore(
   withEntities({ entity: type<Todo>(), collection: 'todo' }),
   withState(initialState),
-  withLogger('todos'),
+  // withLogger('todos'),
   withMethods((store) => {
     //   const todoService = inject(TodoService);
 

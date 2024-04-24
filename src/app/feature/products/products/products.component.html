@@ -1,19 +1,44 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <p>
-    <app-input controlKey="title" [control]="form.controls.title" />
-  </p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>product</mat-label>
+    <input
+      matInput
+      aria-label="product"
+      [matAutocomplete]="auto"
+      [formControl]="form.controls.title"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (product of filteredProducts(); track product) {
+        <mat-option [value]="product.title">
+          <img
+            alt=""
+            class="example-option-img"
+            [src]="product.image"
+            height="25"
+          />
+          <span>{{ product.title }}</span> |
+          <small>Description: {{ product.description }}</small>
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
 
-  <p>
-    <label for="price">Price </label>
-    <input type="text" id="price" name="price" formControlName="price" />
-  </p>
+  <br />
 
-  <p>
-    <button type="submit">Submit</button>
-  </p>
+  <mat-slide-toggle
+    [checked]="form.controls.title.disabled"
+    (change)="
+      form.controls.title.disabled
+        ? form.controls.title.enable()
+        : form.controls.title.disable()
+    "
+  >
+    Disable Input?
+  </mat-slide-toggle>
 </form>
 
 <br />
 <br />
 
-<pre>{{ productStore.products() | json }}</pre>
+<!-- <pre>{{ productStore.products() | json }}</pre> -->
+<pre>{{ productStore.productsComputed() | json }}</pre>
