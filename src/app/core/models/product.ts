@@ -7,6 +7,7 @@ export interface Product {
   category: string;
   description: string;
   image: string;
+  categories?: string[]; // Array<string>; -> Array type using 'Array<string>' is forbidden. Use 'string[]' instead.
 }
 
 export interface ProductForm {

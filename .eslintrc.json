@@ -16,6 +16,7 @@
         "plugin:boundaries/strict"
       ],
       "rules": {
+        "@typescript-eslint/array-type": "error",
         "boundaries/element-types": [
           "error",
           {
