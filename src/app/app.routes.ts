@@ -15,6 +15,10 @@ export const routes: Routes = [
     loadChildren: () => import('./feature/todos/todos.routes'),
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./feature/auth/auth.routes'),
+  },
+  {
     path: '**',
     redirectTo: '',
   },
